@@ -1,0 +1,27 @@
+.grid {
+  display: grid;
+  grid-template-rows: 4fr 3fr 3fr;
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textCenter {
+  text-align: center;
+  align-items: center;
+}
+
+button {
+  height: 40px;
+  background-color: cornflowerblue;
+  font-weight: bold;
+  color: white;
+  padding: 10px 15px; 
+}
+
+button:hover {
+  cursor: pointer;
+}
