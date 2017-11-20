@@ -1,3 +1,13 @@
+.Lobby {
+  
+}
+
+.createRoom {
+  width: 100%;
+  margin: auto;
+  max-width: 300px;
+}
+
 .grid {
   display: grid;
   grid-template-rows: 4fr 3fr 3fr;

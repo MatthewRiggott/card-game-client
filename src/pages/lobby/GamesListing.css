@@ -1,0 +1,24 @@
+.GamesListing {
+  display: grid;
+  margin: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "heading heading heading";
+  grid-gap: 4px;
+}
+
+.fullWidth {
+  grid-area: heading;
+}
+
+.gameRoom {
+  display: grid;
+  border: 1px solid cornflowerblue;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 50px 75px;
+  background-color: #eee;
+}
+
+.joinWrapper {
+  grid-area: 2 / 1 / 3 / 4;
+}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Game from '../../api/Game';
 import Storage from '../../api/Storage';
+import './GamesListing.css';
 
 class GamesListing extends Component {
   constructor(props) {
@@ -34,16 +35,21 @@ class GamesListing extends Component {
     } else if(this.state.isLoading) {
       content = <p>Loading open games from server.</p>;
     } else if(this.state.games) {
-      content = this.state.games.map(g => (<div className="game">
+      content = this.state.games.map(g => (<div className="gameRoom">
         <p className="name">{ g.name }</p>
         <p className="status">{ g.status }</p>
+        <div className="joinWrapper">
+          <button type="button" >Join Room</button>
+        </div>
       </div>));
     } else {
       content = <p>The lobby is empty, create a new game.</p>;
     }
     return (
       <div className="GamesListing">
-        <h1>Games</h1>
+        <div className="fullWidth">
+          <h1>Games Listing</h1>
+        </div>
         { content }
       </div>
     );

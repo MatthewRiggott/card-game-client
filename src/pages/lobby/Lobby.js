@@ -28,7 +28,7 @@ class Lobby extends Component {
     return (
       <div className="Lobby">
         <CreateGame isOpen={ this.state.showCreateGame } onClose={() => this.closeRoomCreate() }/>
-        <button type='button' onClick={ () => this.openRoomCreate() }>Create Room</button>
+        <button className="createRoom" type='button' onClick={ () => this.openRoomCreate() }>Create Room</button>
         <GamesListing />
       </div>
     );
