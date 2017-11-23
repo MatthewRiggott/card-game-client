@@ -13,9 +13,29 @@ class GamesListing extends Component {
     }
   }
 
+  joinGame = (gameOptions) => {
+    const game = new Game(gameOptions);
+    game.join().then(response => {
+      if(response.status == 200) {
+        const data = response.data
+        const joinedGame = new Game({
+          player_id: response.data.player_id,
+          id: data.game_id,
+          name: data.game_name,
+        });
+        Storage.AddGame(joinedGame);
+        //TODO: Load game wait component
+      } else {
+        console.log(`Input Error: ${response.message}: ${response.error}`);
+      }
+    }).catch( e => {
+      console.log("Server Error Caught.");
+    })
+  }
+
   componentDidMount() {
     Game.findAll().then(data => {
-      const games = data.map(g => ({ name: g.name, status: g.status }));
+      const games = data.map(g => ({ name: g.name, status: g.status, id: g.id }));
       this.setState({
         isLoading: false,
         games
@@ -35,11 +55,11 @@ class GamesListing extends Component {
     } else if(this.state.isLoading) {
       content = <p>Loading open games from server.</p>;
     } else if(this.state.games) {
-      content = this.state.games.map(g => (<div className="gameRoom">
+      content = this.state.games.map(g => (<div key={g.id} className="gameRoom">
         <p className="name">{ g.name }</p>
         <p className="status">{ g.status }</p>
         <div className="joinWrapper">
-          <button type="button" >Join Room</button>
+          <button type="button" onClick={ () => this.joinGame({name: g.name, id: g.id}) } >Join Room</button>
         </div>
       </div>));
     } else {

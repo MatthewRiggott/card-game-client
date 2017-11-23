@@ -27,10 +27,15 @@ class CreateGame extends Component {
   }
 
   createGame = () => {
-    const game = new Game(this.state.name);
-    game.create().then(d => {
-      if (d) {
-        const createdGame = d.data.game;
+    const game = new Game({name: this.state.name});
+    game.create().then(response => {
+      if (response.status == 200) {
+        const data = response.data
+        const createdGame = {
+          id: data.game_id,
+          name: data.game_name,
+          player_id: data.player_id,
+        }
         Storage.AddGame(createdGame);
       }
     }).catch(e => {
