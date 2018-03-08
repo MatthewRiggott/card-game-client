@@ -1,0 +1,14 @@
+.RegistrationModal {
+  display: grid;
+}
+
+.RegistrationModal .row {
+  width: auto;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.RegistrationModal button {
+  width: 250px;
+  margin: auto;
+}

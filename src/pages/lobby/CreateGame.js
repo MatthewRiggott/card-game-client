@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
-import Game from '../../api/Game';
+import GameGQL from '../../api/Game';
 import Storage from '../../api/Storage';
+import { graphql, mutate } from 'react-apollo';
 
 const CreateGameStyle = {
   content: {
@@ -16,7 +17,7 @@ class CreateGame extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      game: this.props.game,
     }
   }
 
@@ -27,20 +28,17 @@ class CreateGame extends Component {
   }
 
   createGame = () => {
-    const game = new Game({name: this.state.name});
-    game.create().then(response => {
-      if (response.status == 200) {
-        const data = response.data
-        const createdGame = {
-          id: data.game_id,
-          name: data.game_name,
-          player_id: data.player_id,
-        }
-        Storage.AddGame(createdGame);
-      }
-    }).catch(e => {
-      console.log(e);
-    });
+    this.props.mutate({
+      variables: { gameName: this.state.name }
+    }).then(response => {
+      const data = response.data.createGame;
+      const newGame = data.game;
+      const newGameWithCreds = Object.assign(newGame, {player_id: data.player_id});
+      Storage.AddGame(newGameWithCreds);
+      this.props.openRoom(newGame);
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   cancel = () => {
@@ -73,4 +71,4 @@ CreateGame.defaultProps = {
   isOpen: false,
 }
 
-export default CreateGame;
+export default graphql(GameGQL.createGame)(CreateGame);
